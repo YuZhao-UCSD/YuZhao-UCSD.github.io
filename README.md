@@ -1,1 +1,1 @@
-A Github Pages template for academic websites.
+Yu Zhao's personal website.
