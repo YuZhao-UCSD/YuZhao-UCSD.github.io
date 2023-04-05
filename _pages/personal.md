@@ -14,4 +14,4 @@ Here are some of my personal interests when I'm not immersed in statistics and d
 Video games I am playing recently:
 - [Dota2](https://www.dota2.com/home)
 - [Hogwarts Legacy](https://www.hogwartslegacy.com/en-us)
-- [Terraria](https://terraria.org/)
+- [Resident Evil 4](https://www.residentevil.com/re4/en-us/)
