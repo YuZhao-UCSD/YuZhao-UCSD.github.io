@@ -13,5 +13,6 @@ Here are some of my personal interests when I'm not immersed in statistics and d
 
 Video games I am playing recently:
 - [Dota2](https://www.dota2.com/home)
-- [Hogwarts Legacy](https://www.hogwartslegacy.com/en-us)
 - [Resident Evil 4](https://www.residentevil.com/re4/en-us/)
+- [Forza Horizon 5](https://www.xbox.com/en-US/games/forza-horizon-5)
+- [Assetto Corsa](https://assettocorsa.gg/)

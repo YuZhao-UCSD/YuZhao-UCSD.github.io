@@ -5,8 +5,13 @@ permalink: /publications/
 author_profile: true
 ---
 
+### Peak height distribution of non-stationary Gaussian random fields
+- Derive the explicit peak height distribution of smooth, non-stationary Gaussian processes in 1D with general covariance.
+- Explore statistical properties of scale space fields, which play an important role in peak detection by helping to handle peaks of different spatial extents.
+- Propose two efficient [numerical algorithms](https://github.com/YuZhao-UCSD/NonstationaryGRF) as a general solution for computing the peak height distribution of smooth multidimensional Gaussian random fields in applications.
 
-### [An approximation to peak detection power using Gaussian random field theory](https://arxiv.org/abs/2301.04830)
+
+### [An approximation to peak detection power using Gaussian random field theory](https://www.sciencedirect.com/science/article/abs/pii/S0047259X24000538)
 - Provide new insights into random field theory (RFT) based power approximation formulas for peak detection.
 - The approximation is based on the expected number of local maxima above the threshold $u$, $\text{E}[M_u]$, and proved to work well under three asymptotic scenarios: small domain, large threshold, and sharp signal.
 - Explicit formulas are derived when the noise is modeled by a smooth isotropic Gaussian random field and the mean function is rotationally symmetric.

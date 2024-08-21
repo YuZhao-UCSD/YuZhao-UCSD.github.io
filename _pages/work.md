@@ -10,7 +10,7 @@ author_profile: true
 
 
 ### [Cruise LLC](https://getcruise.com/), San Francisco, CA
-*Data Scientist Intern* | Jun. 2022 – Sep. 2022
+*PhD Intern, Data Scientist* | Jun. 2022 – Sep. 2022
 
 - Leveraged my skills in SQL and Python to develop data miners and visualizers that can efficiently filter and present driving scenarios from multiple BigQuery tables.
 - Decomposed driving into mutually exclusive, collectively exhaustive scenarios, and derived scenario coverage probabilities and confidence intervals.
