@@ -15,7 +15,7 @@ Education
 * M.S. in Statistics, UC San Diego, 2019
 * B.S. in Mathematics and Applied Mathematics, Beijing University of Posts and Telecommunications, 2017
 
-[Work experience](/work/)
+[Past work experience](/work/)
 ======
 * Summer 2022: PhD Intern, Data Scientist, Cruise LLC
 * Summer 2021: Statistician Intern, Bayer U.S. LLC

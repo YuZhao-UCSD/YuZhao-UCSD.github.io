@@ -7,6 +7,10 @@ author_profile: true
 
 {% include base_path %}
 
+### [Cruise LLC](https://getcruise.com/), San Francisco, CA
+*Senior Data Scientist* | Aug. 2023 – present
+
+- Safety metrics development and autonomus vehicle performance evaluation.
 
 
 ### [Cruise LLC](https://getcruise.com/), San Francisco, CA
