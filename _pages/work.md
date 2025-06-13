@@ -11,7 +11,7 @@ author_profile: true
 *Data Scientist, Research* | Mar. 2025 – present
 - Google search
 
-<img src="/images/google_aim.webp" style="width: 60%; margin: auto; display: block;">
+<img src="/images/Google_aim.webp" style="width: 60%; margin: auto; display: block;">
 
 ### <a href="https://web.archive.org/web/20230331120130/https://getcruise.com/" style="color: black; text-decoration: underline; text-decoration-style: dotted;">Cruise LLC</a>, San Francisco, CA
 *Senior Data Scientist* | Aug. 2023 – Mar. 2025
@@ -43,4 +43,4 @@ This work has been featured in my manager <a href="https://scholar.google.com/ci
 
 This work is presented in a poster session at <a href="https://ww2.amstat.org/meetings/jsm/2022/onlineprogram/AbstractDetails.cfm?abstractid=322906" style="color: black; text-decoration: underline; text-decoration-style: dotted;">JSM 2022</a>. 
 
-<img src="/images/bayer.webp" style="width: 60%; margin: auto; display: block;">
+<img src="/images/Bayer.webp" style="width: 60%; margin: auto; display: block;">
