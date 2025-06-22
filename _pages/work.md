@@ -7,6 +7,10 @@ author_profile: true
 
 {% include base_path %}
 
+<video controls="" muted="" loop="" style="width: 60%; margin: auto; display: block;">
+<source src="https://github.com/YuZhao-UCSD/YuZhao-UCSD.github.io/raw/refs/heads/master/images/intro.mp4" >
+</video>
+
 ### Google LLC, Mountain View, CA
 *Data Scientist, Research* | Mar. 2025 – present
 - Google search
@@ -19,8 +23,13 @@ author_profile: true
 - Developed metrics to measure autonomous vehicle safety, and conducted comprehensive safety analysis with cross-functional teams to support the launch decision for new markets.
 - Leveraged data from published papers to benchmark Cruise’s safety performance against top competitors, providing quantification of the comparison and identifying key areas for improvement.
 
-<img src="/images/cruise_brake.gif" style="width: 60%; margin: auto; display: block;"/>
-<img src="/images/lrr.png" style="width: 60%; margin: auto; display: block;"/>
+<figure style="width: 60%; margin: auto; display: block;">
+<img src="/images/cruise_brake.gif" />
+<img src="/images/lrr.png" /> 
+<figcaption style="text-align: center; margin-top: 10px; font-style: italic;">
+        Source: Cruise X account
+    </figcaption>
+</figure>
 
 ### <a href="https://web.archive.org/web/20230331120130/https://getcruise.com/" style="color: black; text-decoration: underline; text-decoration-style: dotted;">Cruise LLC</a>, San Francisco, CA
 *PhD Intern, Data Scientist* | Jun. 2022 – Sep. 2022
@@ -33,6 +42,9 @@ author_profile: true
 This work has been featured in my manager <a href="https://scholar.google.com/citations?user=SpXgsjoAAAAJ&hl=en" style="color: black; text-decoration: underline; text-decoration-style: dotted;">Geoffrey Chi-Johnston</a>'s presentation at <a href="https://kdd.org/kdd2022/ADSSpeaker.html" style="color: black; text-decoration: underline; text-decoration-style: dotted;">KDD 2022</a> with the title: <a href="https://youtu.be/prqcB09XPTU" style="color: black; text-decoration: underline; text-decoration-style: dotted;">Applications of data science for autonomous vehicles</a>.
 
 <img src="/images/cruise_sim.gif" style="width: 60%; margin: auto; display: block;">
+<figcaption style="text-align: center; margin-top: 10px; font-style: italic;">
+        Source: <a href="https://medium.com/cruise/cruise-av-development-loop-covid-19-1daef2f0c3d5" style="color: black; text-decoration: underline; text-decoration-style: dotted;">Cruise blog</a>
+    </figcaption>
 
 ### <a href="https://www.bayer.com/en/us/bayer-united-states-of-america" style="color: black; text-decoration: underline; text-decoration-style: dotted;">Bayer U.S. LLC</a>, Whippany, NJ
 *Statistician Intern* | Jun. 2021 – Sep. 2021
