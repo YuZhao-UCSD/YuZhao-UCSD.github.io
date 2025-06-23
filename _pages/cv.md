@@ -15,7 +15,7 @@ Education
 * M.S. in Statistics, UC San Diego, 2019
 * B.S. in Mathematics and Applied Mathematics, Beijing University of Posts and Telecommunications, 2017
 
-Work experience
+Work Experience
 ======
 * Mar. 2025 – present: Data Scientist Research, Google LLC
 * Aug. 2023 – Mar. 2025: Senior Data Scientist, Cruise LLC

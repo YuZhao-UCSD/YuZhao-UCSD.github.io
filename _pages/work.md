@@ -29,7 +29,7 @@ author_profile: true
 <figure style="width: 60%; margin: auto; display: block;">
 <img src="/images/cruise_brake.gif"/>
 <img src="/images/lrr.png"/> 
-<figcaption style="text-align: center; margin-top: 10px; font-style: italic;">
+<figcaption style="text-align: center; font-style: italic;">
         Source: Cruise X account
     </figcaption>
 </figure>
@@ -45,7 +45,7 @@ author_profile: true
 This work has been featured in my manager <a href="https://scholar.google.com/citations?user=SpXgsjoAAAAJ&hl=en" style="color: black; text-decoration: underline; text-decoration-style: dotted;">Geoffrey Chi-Johnston</a>'s presentation at <a href="https://kdd.org/kdd2022/ADSSpeaker.html" style="color: black; text-decoration: underline; text-decoration-style: dotted;">KDD 2022</a> with the title: <a href="https://youtu.be/prqcB09XPTU" style="color: black; text-decoration: underline; text-decoration-style: dotted;">Applications of data science for autonomous vehicles</a>.
 
 <img src="/images/cruise_sim.gif" style="width: 60%; margin: auto; display: block;">
-<figcaption style="text-align: center; margin-top: 10px; font-style: italic;">
+<figcaption style="text-align: center; font-style: italic;">
         Source: <a href="https://medium.com/cruise/cruise-av-development-loop-covid-19-1daef2f0c3d5" style="color: black; text-decoration: underline; text-decoration-style: dotted;">Cruise blog</a>
     </figcaption>
 

@@ -1,18 +1,18 @@
 # main links links
 main:
 
+  - title: "CV"
+    url: /cv/  
+
   - title: "Research"
     url: /publications/
 
-  - title: "Work experience"
-    url: /work/    
-
   - title: "Teaching"
     url: /teaching/    
-    
-  - title: "CV"
-    url: /cv/
-    
+      
+  - title: "Work Experience"
+    url: /work/    
+
   - title: "Personal"
     url: /personal/
 
