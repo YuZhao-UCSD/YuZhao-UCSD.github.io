@@ -14,12 +14,14 @@ $indent-var                 : 1.3em;
 
 /* system typefaces */
 $serif                      : Georgia, Times, serif;
-$sans-serif                 : -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
-$monospace                  : Monaco, Consolas, "Lucida Console", monospace;
+$ai-font                    : "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+$ai-font-heading            : "Plus Jakarta Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+$sans-serif                 : $ai-font;
+$monospace                  : "JetBrains Mono", "Roboto Mono", Menlo, Monaco, Consolas, monospace;
 
 /* sans serif typefaces */
-$sans-serif-narrow          : $sans-serif;
-$helvetica                  : Helvetica, "Helvetica Neue", Arial, sans-serif;
+$sans-serif-narrow          : $ai-font;
+$helvetica                  : $ai-font;
 
 /* serif typefaces */
 $georgia                    : Georgia, serif;
@@ -28,9 +30,9 @@ $bodoni                     : "Bodoni MT", serif;
 $calisto                    : "Calisto MT", serif;
 $garamond                   : Garamond, serif;
 
-$global-font-family         : $sans-serif;
-$header-font-family         : $sans-serif;
-$caption-font-family        : $serif;
+$global-font-family         : $ai-font;
+$header-font-family         : $ai-font-heading;
+$caption-font-family        : $ai-font;
 
 /* type scale */
 $type-size-1                : 2.441em;  // ~39.056px
@@ -38,33 +40,46 @@ $type-size-2                : 1.953em;  // ~31.248px
 $type-size-3                : 1.563em;  // ~25.008px
 $type-size-4                : 1.25em;   // ~20px
 $type-size-5                : 1em;      // ~16px
-$type-size-6                : 0.75em;   // ~12px
-$type-size-7                : 0.6875em; // ~11px
-$type-size-8                : 0.625em;  // ~10px
+$type-size-6                : 0.85em;   // ~13.6px
+$type-size-7                : 0.75em;   // ~12px
+$type-size-8                : 0.65em;   // ~10.4px
 
 
 /*
    Colors
    ========================================================================== */
 
-$gray                       : #7a8288;
-$dark-gray                  : mix(#000, $gray, 40%);
-$darker-gray                : mix(#000, $gray, 60%);
-$light-gray                 : mix(#fff, $gray, 50%);
-$lighter-gray               : mix(#fff, $gray, 90%);
+/* AI Theme Core Colors (Clean White AI Aesthetic) */
+$ai-bg                      : #ffffff;
+$ai-surface                 : #ffffff;
+$ai-surface-solid           : #ffffff;
+$ai-border                  : #e2e8f0;
+$ai-text                    : #0f172a;
+$ai-text-secondary          : #64748b;
+$ai-text-body               : #334155;
+$ai-accent                  : #4f46e5;
+$ai-accent-hover            : #4338ca;
+$ai-cyan                    : #0284c7;
+$ai-violet                  : #7c3aed;
 
-$body-color                 : #fff;
-$background-color           : #fff;
-$code-background-color      : #fafafa;
-$code-background-color-dark : $light-gray;
-$text-color                 : $dark-gray;
-$border-color               : $lighter-gray;
+$gray                       : $ai-text-secondary;
+$dark-gray                  : $ai-text;
+$darker-gray                : #0f172a;
+$light-gray                 : $ai-border;
+$lighter-gray               : #f8fafc;
 
-$primary-color              : #7a8288;
-$success-color              : #62c462;
-$warning-color              : #f89406;
-$danger-color               : #ee5f5b;
-$info-color                 : #52adc8;
+$body-color                 : #ffffff;
+$background-color           : #ffffff;
+$code-background-color      : #f8fafc;
+$code-background-color-dark : #f1f5f9;
+$text-color                 : #334155;
+$border-color               : #e2e8f0;
+
+$primary-color              : $ai-accent;
+$success-color              : #10b981;
+$warning-color              : #f59e0b;
+$danger-color               : #ef4444;
+$info-color                 : $ai-cyan;
 
 /* brands */
 $behance-color              : #1769FF;
@@ -72,29 +87,29 @@ $dribbble-color             : #ea4c89;
 $facebook-color             : #3b5998;
 $flickr-color               : #ff0084;
 $foursquare-color           : #0072b1;
-$github-color               : #171516;
+$github-color               : #0f172a;
 $google-plus-color          : #dd4b39;
 $instagram-color            : #517fa4;
 $lastfm-color               : #d51007;
-$linkedin-color             : #007bb6;
+$linkedin-color             : #0a66c2;
 $pinterest-color            : #cb2027;
 $rss-color                  : #fa9b39;
 $soundcloud-color           : #ff3300;
-$stackoverflow-color        : #fe7a15;
+$stackoverflow-color        : #f48024;
 $tumblr-color               : #32506d;
-$twitter-color              : #55acee;
+$twitter-color              : #0284c7;
 $vimeo-color                : #1ab7ea;
 $vine-color                 : #00bf8f;
-$youtube-color              : #bb0000;
+$youtube-color              : #ef4444;
 $xing-color                 : #006567;
 
 
 /* links */
-$link-color                 : $info-color;
-$link-color-hover           : mix(#000, $link-color, 25%);
-$link-color-visited         : mix(#fff, $link-color, 25%);
-$masthead-link-color        : $primary-color;
-$masthead-link-color-hover  : mix(#000, $primary-color, 25%);
+$link-color                 : #4f46e5;
+$link-color-hover           : #3730a3;
+$link-color-visited         : #4f46e5;
+$masthead-link-color        : #64748b;
+$masthead-link-color-hover  : #0f172a;
 
 
 /*
@@ -146,8 +161,10 @@ $susy: (
    Other
    ========================================================================== */
 
-$border-radius              : 4px;
-$box-shadow                 : 0 1px 1px rgba(0, 0, 0, 0.125);
-$navicon-width              : 28px;
-$navicon-height             : 4px;
-$global-transition          : all 0.2s ease-in-out;
+$border-radius              : 12px;
+$card-border-radius         : 16px;
+$pill-border-radius         : 24px;
+$box-shadow                 : 0 1px 3px rgba(60, 64, 67, 0.12), 0 1px 2px rgba(60, 64, 67, 0.24);
+$navicon-width              : 24px;
+$navicon-height             : 3px;
+$global-transition          : all 0.2s cubic-bezier(0.4, 0, 0.2, 1);

@@ -1,3 +1,40 @@
 <script src="{{ base_path }}/assets/js/main.min.js"></script>
 
+<!-- Open all external hyperlinks in a new tab -->
+<script>
+  (function() {
+    function setExternalLinkTargets() {
+      var links = document.querySelectorAll('a[href^="http://"], a[href^="https://"], a[href^="//"]');
+      for (var i = 0; i < links.length; i++) {
+        var link = links[i];
+        if (link.hostname && link.hostname !== window.location.hostname) {
+          link.setAttribute('target', '_blank');
+          link.setAttribute('rel', 'noopener noreferrer');
+        }
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setExternalLinkTargets);
+    } else {
+      setExternalLinkTargets();
+    }
+
+    // Capture dynamically rendered or late-clicked external links
+    document.addEventListener('click', function(e) {
+      var target = e.target;
+      while (target && target.tagName !== 'A') {
+        target = target.parentElement;
+      }
+      if (target && target.href) {
+        if (target.hostname && target.hostname !== window.location.hostname && (target.protocol === 'http:' || target.protocol === 'https:')) {
+          target.target = '_blank';
+          target.rel = 'noopener noreferrer';
+        }
+      }
+    }, true);
+  })();
+</script>
+
 {% include /comments-providers/scripts.html %}
+
