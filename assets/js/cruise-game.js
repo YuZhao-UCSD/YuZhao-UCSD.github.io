@@ -358,6 +358,14 @@
     }
   }
 
+  function getDisplayMph(s) {
+    if (!s || isNaN(s) || s <= 0.05) return 0;
+    if (s <= 3.8) {
+      return Math.max(0, Math.round(s * (55 / 3.8)));
+    }
+    return Math.round(55 + (s - 3.8) * 4.95);
+  }
+
   function pauseGame() {
     if (!isPlaying || isPaused) return;
     isPaused = true;
@@ -374,7 +382,7 @@
     if (animationId) cancelAnimationFrame(animationId);
 
     const currentRunMiles = currentRunDistance / 5280;
-    const displayMph = Math.max(40, Math.round(55 + (speed - 3.8) * 4.95));
+    const displayMph = getDisplayMph(speed);
     if (pauseDistVal) pauseDistVal.textContent = currentRunMiles.toFixed(2) + ' mi';
     if (pauseSpeedVal) pauseSpeedVal.textContent = displayMph + ' MPH';
     if (pauseModeVal) pauseModeVal.textContent = isAutonomous ? 'Poppy (Self Driving)' : 'Poppy (Manual)';
@@ -974,7 +982,7 @@
       telemetryNearMissTag.textContent = 'NEAR MISSES: ' + currentRunNearMisses;
     }
 
-    const displayMph = Math.max(40, Math.round(55 + (speed - 3.8) * 4.95));
+    const displayMph = getDisplayMph(speed);
     if (telemetrySpeedVal) {
       telemetrySpeedVal.textContent = displayMph;
     }
@@ -1262,7 +1270,11 @@
     const safeFollowingDistance = 160 + (speed * 16);
 
     if (jaywalkerHazard) {
-      if (jaywalkerDist < 130) {
+      if (jaywalkerDist < 70) {
+        // Full stop yield if pedestrian is directly in front
+        speed = Math.max(0.0, speed - 0.60 * dt);
+        plannerStatus = 'AEB: STOPPED FOR PEDESTRIAN';
+      } else if (jaywalkerDist < 130) {
         // Critical Emergency Braking for Pedestrian
         speed = Math.max(0.6, speed - 0.45 * dt);
         plannerStatus = 'AEB: YIELDING TO JAYWALKER';
@@ -1403,7 +1415,7 @@
         if (player.y < 370) {
           speed = Math.min(baseSpeed * 1.45, speed + 0.10 * dt);
         } else if (player.y > 420) {
-          speed = Math.max(baseSpeed * 0.58, speed - 0.14 * dt);
+          speed = Math.max(0.6, speed - 0.14 * dt);
         } else {
           if (speed < baseSpeed) speed = Math.min(baseSpeed, speed + 0.06 * dt);
           if (speed > baseSpeed) speed = Math.max(baseSpeed, speed - 0.06 * dt);
@@ -1414,7 +1426,7 @@
         if (player.y > 415) player.y -= Math.min(2.0 * dt, (player.y - 415) * 0.1 * dt);
 
         if (keys.up) speed = Math.min(speed + 0.10 * dt, baseSpeed * 1.5);
-        else if (keys.down) speed = Math.max(speed - 0.18 * dt, baseSpeed * 0.52);
+        else if (keys.down) speed = Math.max(0.6, speed - 0.20 * dt);
         else {
           if (speed < baseSpeed) speed = Math.min(baseSpeed, speed + 0.06 * dt);
           if (speed > baseSpeed) speed = Math.max(baseSpeed, speed - 0.06 * dt);
