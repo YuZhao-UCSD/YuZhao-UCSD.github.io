@@ -175,7 +175,8 @@
   let totalCollisions = 0;
   let totalNearMisses = 0;
 
-  // Run state (Starts at highway speed = 3.8, scales dynamically with miles, capped at 9.85: +20% max speed)
+  // Run state (Starts at highway speed = 3.8, scales dynamically with miles, capped at MAX_BASE_SPEED: +10% max physical speed)
+  const MAX_BASE_SPEED = 10.835; // 9.85 * 1.10 (+10% max physical velocity felt by players)
   let isPlaying = false;
   let animationId = null;
   let speed = 3.8;
@@ -363,7 +364,9 @@
     if (s <= 3.8) {
       return Math.max(0, Math.round(s * (55 / 3.8)));
     }
-    return Math.round(55 + (s - 3.8) * 4.95);
+    // Speedometer displays identical range (55 MPH at s=3.8 to 85 MPH at s=MAX_BASE_SPEED)
+    // Players feel +10% higher physical speed on road while displayed speedometer values remain unchanged
+    return Math.round(55 + (s - 3.8) * ((85 - 55) / (MAX_BASE_SPEED - 3.8)));
   }
 
   function pauseGame() {
@@ -1127,8 +1130,13 @@
     const runMiles = currentRunDistance / 5280;
     // Avoid spawning cars while a jaywalker is crossing near the top of the roadway
     if (jaywalkers.length > 0 && jaywalkers.some(j => j.y < 240)) return;
-    // Scale max traffic from 4 up to 5 cars in end-game (> 2.5 mi) for authentic challenge
-    const maxCars = runMiles > 2.5 ? 5 : 4;
+    // Scale max traffic: 4 cars early, 5 cars in mid-game (> 2.5 mi), and 6 cars (+20% volume) in late-game (> 10 mi)
+    let maxCars = 4;
+    if (runMiles > 12.0) {
+      maxCars = 6; // +20% traffic capacity in late game (5 -> 6 cars)
+    } else if (runMiles > 2.5) {
+      maxCars = 5;
+    }
     if (traffic.length >= maxCars) return;
     const carsNearTop = traffic.filter(c => c.y < 165).length;
     if (carsNearTop >= 2) return;
@@ -1449,10 +1457,10 @@
     trajDashOffset = (trajDashOffset + 1.5 * dt) % 17;
     avTrajDashOffset = (avTrajDashOffset + 1.2 * dt) % 12;
 
-    // Distance metrics & Dynamic Speed Progression (Starts at highway speed 3.8, scales with miles, capped at 9.85: +20% max speed)
+    // Distance metrics & Dynamic Speed Progression (Starts at highway speed 3.8, scales with miles, capped at MAX_BASE_SPEED: +10% max physical speed)
     currentRunDistance += speed * 1.25 * dt;
     const runMiles = currentRunDistance / 5280;
-    baseSpeed = Math.min(9.85, 3.8 + (runMiles * 2.2));
+    baseSpeed = Math.min(MAX_BASE_SPEED, 3.8 + (runMiles * 2.2));
     updateHud();
 
     // Spawn Jaywalker every mile crossing the street (1.0 mi, 2.0 mi, 3.0 mi, ...)
@@ -1462,8 +1470,11 @@
     }
 
     // Spawn traffic - paced to scale challenge with miles (framerate-independent accumulation)
+    // After 10 miles, gradually increase traffic volume by ~20% (spawn interval floor reduces from 34 to 28)
     spawnTimer += dt;
-    const spawnRate = Math.max(34, Math.floor(75 - (runMiles * 6.5)));
+    const lateGameProgress = runMiles > 10.0 ? Math.min(1.0, (runMiles - 10.0) / 5.0) : 0;
+    const effectiveMinSpawnRate = Math.round(34 - (34 - 28) * lateGameProgress);
+    const spawnRate = Math.max(effectiveMinSpawnRate, Math.floor(75 - (runMiles * 6.5)));
     if (spawnTimer >= spawnRate) {
       spawnCar();
       spawnTimer = 0;
@@ -1525,7 +1536,7 @@
           }
         }
       } else {
-        // At higher mileage (> 2.5 mi, speed approaching 9.85), simulate realistic highway corner cases
+        // At higher mileage (> 2.5 mi, speed approaching MAX_BASE_SPEED), simulate realistic highway corner cases
         // (Occasional aggressive human driver lane cut-in with smooth progressive steering - NO instant teleportation)
         if (runMiles > 2.5 && car.y > 210 && car.y < 360 && !car.cutInDone && !car.isCuttingIn) {
           const latDist = Math.abs((car.x + car.w / 2) - (player.x + player.w / 2));
