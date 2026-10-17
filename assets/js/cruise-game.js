@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Autonomous Vehicle Safety Evaluation Simulation
  * Cruise AV "Poppy" & NPC Interactive Highway Simulator
  */
@@ -15,9 +15,13 @@
   if (dpr > 1) {
     canvas.width = Math.round(LOGICAL_WIDTH * dpr);
     canvas.height = Math.round(LOGICAL_HEIGHT * dpr);
-    canvas.style.width = LOGICAL_WIDTH + 'px';
-    canvas.style.height = LOGICAL_HEIGHT + 'px';
+  } else {
+    canvas.width = LOGICAL_WIDTH;
+    canvas.height = LOGICAL_HEIGHT;
   }
+  // Responsive sizing: let CSS 100% width & 680/510 aspect-ratio scale smoothly
+  canvas.style.width = '100%';
+  canvas.style.height = '100%';
 
   const overlay = document.getElementById('simOverlay');
   const startBtn = document.getElementById('startSimBtn');
