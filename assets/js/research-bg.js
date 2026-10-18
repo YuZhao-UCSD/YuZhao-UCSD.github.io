@@ -1870,7 +1870,7 @@
 
       // Alternating combos:
       // Combo 0: Deafening Blast (Quas -> Wex -> Exort -> Deafening Blast Cast)
-      // Combo 1: Cataclysm (Exort -> Exort -> Exort -> Cataclysm Global Strikes)
+      // Combo 1: Sun Strike (Exort -> Exort -> Exort -> 5 Global Sun Strikes for 5 Enemies)
       // Combo 2: Aghanim's Shard EMP (Wex -> Wex -> Wex -> Magnetic Vortex Suction & EMP Detonation)
       var comboIdx = totalCycles % 3;
 
@@ -2306,27 +2306,25 @@
             ctx.stroke();
           }
         } else if (comboIdx === 1) {
-          // 2. CATACLYSM GLOBAL STRIKES CAST:
-          // Global multi-target Cataclysm: 4 enemy pairs (8 simultaneous orbital strikes across the flank!)
+          // 2. SUN STRIKE (5 GLOBAL STRIKES FOR 5 ENEMIES):
+          // Global Sun Strike barrage targeting the 5 enemy heroes across the battlefield
           var strikeProg = castProg; // 0 to 1
 
-          // 8 strikes arranged in 4 distinct tactical pairs (Dota 2 Cataclysm dual-strike mechanics)
+          // 5 Sun Strikes targeting the 5 enemy heroes across lanes (Top, River, Mid, Jungle, Bot)
           var cStrikes = [
-            // Pair 1 (North-west target)
-            { dx: -38 * scale, dy: -14 * scale, delay: 0.00, beamAng: 0.20 },
-            { dx: -24 * scale, dy: -24 * scale, delay: 0.02, beamAng: 0.12 },
-            // Pair 2 (North-east target)
-            { dx: +16 * scale, dy: -20 * scale, delay: 0.01, beamAng: -0.15 },
-            { dx: +34 * scale, dy: -8 * scale,  delay: 0.03, beamAng: -0.22 },
-            // Pair 3 (Mid target)
-            { dx: -16 * scale, dy: +18 * scale, delay: 0.01, beamAng: 0.08 },
-            { dx: +12 * scale, dy: +12 * scale, delay: 0.02, beamAng: -0.10 },
-            // Pair 4 (South target)
-            { dx: -30 * scale, dy: +44 * scale, delay: 0.03, beamAng: 0.18 },
-            { dx: +24 * scale, dy: +40 * scale, delay: 0.02, beamAng: -0.16 }
+            // Enemy 1: Top-Left (Top lane)
+            { dx: -32 * scale, dy: -26 * scale, delay: 0.00, beamAng: 0.16 },
+            // Enemy 2: Top-Right (River / Roshan)
+            { dx: +28 * scale, dy: -18 * scale, delay: 0.02, beamAng: -0.16 },
+            // Enemy 3: Center (Mid lane)
+            { dx: -4 * scale,  dy: +4 * scale,  delay: 0.01, beamAng: 0.04 },
+            // Enemy 4: Bottom-Left (Jungle)
+            { dx: -28 * scale, dy: +34 * scale, delay: 0.03, beamAng: 0.14 },
+            // Enemy 5: Bottom-Right (Bot lane)
+            { dx: +24 * scale, dy: +42 * scale, delay: 0.02, beamAng: -0.14 }
           ];
 
-          // Global atmospheric Cataclysm flare illumination
+          // Global atmospheric Sun Strike flare illumination
           if (strikeProg >= 0.28 && strikeProg <= 0.60) {
             var flashPhase = (strikeProg - 0.28) / 0.32;
             var skyGlowAlpha = Math.sin(flashPhase * Math.PI) * 0.12;
@@ -2338,7 +2336,7 @@
             ctx.restore();
           }
 
-          // Render each of the 8 global orbital strikes
+          // Render each of the 5 global orbital strikes for the 5 enemies
           for (var si = 0; si < cStrikes.length; si++) {
             var cs = cStrikes[si];
             var sx = cx + cs.dx;
@@ -2347,7 +2345,7 @@
             // Local progress for this strike
             var sProg = Math.max(0, Math.min(1.0, (strikeProg - cs.delay) / (1.0 - cs.delay)));
 
-            // A. Pre-impact targeting reticle (charging inward)
+            // A. Pre-impact targeting reticle (charging inward onto the enemy)
             if (sProg < 0.48) {
               var retAlpha = Math.min(1.0, sProg / 0.15) * Math.max(0, 1.0 - (sProg - 0.35) / 0.13);
               var retShrink = (1.0 - sProg / 0.40);
@@ -2372,6 +2370,12 @@
               ctx.moveTo(sx - tLen, sy); ctx.lineTo(sx + tLen, sy);
               ctx.moveTo(sx, sy - tLen); ctx.lineTo(sx, sy + tLen);
               ctx.stroke();
+
+              // Enemy hero marker at target center
+              ctx.fillStyle = 'rgba(239, 68, 68, ' + (retAlpha * 0.70) + ')';
+              ctx.beginPath();
+              ctx.arc(sx, sy, 1.2 * scale, 0, Math.PI * 2);
+              ctx.fill();
             }
 
             // B. High-energy orbital laser beam plunging from the heavens
