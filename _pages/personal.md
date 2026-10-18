@@ -27,3 +27,9 @@ Games I have been playing recently:
 - [EA Sports FC](https://www.ea.com/games/ea-sports-fc) 
 - [Assetto Corsa](https://assettocorsa.gg/) 
 - [Resident Evil franchise](https://www.residentevil.com/)  
+
+### Dota2 Invoker Spell Simulator
+Can you invoke like Carl, the Arsenal Magus? A skill is displayed below—prepare the right 3 elemental orbs (<kbd>Q</kbd> Quas, <kbd>W</kbd> Wex, <kbd>E</kbd> Exort) and click **Invoke** (<kbd>R</kbd>) to cast the skill!
+
+{% include invoker-game.html %}
+

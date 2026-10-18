@@ -1,0 +1,137 @@
+<div class="invoker-sim-card" id="invokerCard">
+  <div class="invoker-header">
+    <div class="invoker-badge-icon" aria-hidden="true" title="Dota 2 Invoke">
+      <img src="/images/invoker/invoker_invoke.png" alt="Invoke Icon" width="22" height="22" style="border-radius: 4px; display: block;">
+    </div>
+
+    <div class="invoker-header-actions">
+      <button id="btnToggleMode" class="invoker-btn-sm" type="button" title="Switch practice mode">🎯 Casual</button>
+      <button id="btnToggleGuide" class="invoker-btn-sm" type="button" title="Toggle spell formulas cheat sheet">📖 Guide</button>
+      <button id="btnResetTrainer" class="invoker-btn-sm" type="button" title="Reset score and streak">↺ Reset</button>
+    </div>
+  </div>
+
+  <div class="invoker-stats-bar">
+    <div class="stat-pill stat-streak">
+      <span>🔥 Streak:</span>
+      <strong id="invokerStreak">0</strong>
+    </div>
+    <div class="stat-pill">
+      <span>🏆 Best:</span>
+      <strong id="invokerBest">0</strong>
+    </div>
+    <div class="stat-pill">
+      <span>⚡ Avg Speed:</span>
+      <strong id="invokerSpeed">--</strong>
+    </div>
+    <div class="stat-pill stat-timer" id="invokerTimer" style="display: none;">
+      <span>⏱️ Time:</span>
+      <strong id="invokerTimerVal">30s</strong>
+    </div>
+  </div>
+
+  <!-- Prompted Target Spell -->
+  <div class="invoker-target-card">
+    <div class="target-label">Target Skill to Cast</div>
+    <div class="target-icon-wrap" id="targetSpellIcon">
+      <img id="targetSpellImg" src="/images/invoker/invoker_sun_strike.png" alt="Target Skill Icon" class="target-spell-img">
+    </div>
+    <div class="target-name" id="targetSpellName">Sun Strike</div>
+    <div class="target-desc" id="targetSpellDesc">Directs solar rays to incinerate a target area anywhere on the map after a brief delay.</div>
+    <div class="target-recipe-hint" id="targetSpellHint">
+      <!-- Injected via JS -->
+    </div>
+  </div>
+
+  <!-- Hero's Current Reagent Orbs Tray -->
+  <div class="invoker-orb-tray" aria-label="Current 3 Active Orbs">
+    <div class="orb-slot" id="orbSlot0"><span class="orb-empty-pip"></span></div>
+    <div class="orb-slot" id="orbSlot1"><span class="orb-empty-pip"></span></div>
+    <div class="orb-slot" id="orbSlot2"><span class="orb-empty-pip"></span></div>
+  </div>
+
+  <!-- Control Buttons (Click or Q/W/E/R) with Official Dota 2 Orb Icons -->
+  <div class="invoker-controls-grid">
+    <button class="invoker-btn btn-quas" id="btnQ" type="button" title="Add Quas (Key: Q)" aria-label="Quas - Frost element">
+      <img src="/images/invoker/invoker_quas.png" alt="Quas Orb" class="invoker-btn-icon">
+      <span class="btn-name">Quas</span>
+      <span class="btn-key"><kbd>Q</kbd></span>
+    </button>
+
+    <button class="invoker-btn btn-wex" id="btnW" type="button" title="Add Wex (Key: W)" aria-label="Wex - Storm element">
+      <img src="/images/invoker/invoker_wex.png" alt="Wex Orb" class="invoker-btn-icon">
+      <span class="btn-name">Wex</span>
+      <span class="btn-key"><kbd>W</kbd></span>
+    </button>
+
+    <button class="invoker-btn btn-exort" id="btnE" type="button" title="Add Exort (Key: E)" aria-label="Exort - Flame element">
+      <img src="/images/invoker/invoker_exort.png" alt="Exort Orb" class="invoker-btn-icon">
+      <span class="btn-name">Exort</span>
+      <span class="btn-key"><kbd>E</kbd></span>
+    </button>
+
+    <button class="invoker-btn btn-invoke" id="btnR" type="button" title="Invoke Spell (Key: R)" aria-label="Invoke Spell">
+      <img src="/images/invoker/invoker_invoke.png" alt="Invoke Icon" class="invoker-btn-icon">
+      <span class="btn-name">Invoke</span>
+      <span class="btn-key"><kbd>R</kbd></span>
+    </button>
+  </div>
+
+  <!-- Feedback Banner -->
+  <div class="invoker-feedback-banner feedback-neutral" id="invokerFeedback">
+    Ready! Click buttons or press&nbsp;<kbd>Q</kbd>,&nbsp; <kbd>W</kbd>,&nbsp; <kbd>E</kbd>,&nbsp; <kbd>R</kbd>&nbsp; on your keyboard.
+  </div>
+
+  <!-- Collapsible Cheat Sheet / Formula Guide -->
+  <div class="invoker-guide-panel" id="invokerGuidePanel" style="display: none;">
+    <div class="guide-title">
+      <span>10 Invoker Skills Reference (Any Reagent Order)</span>
+    </div>
+    <div class="guide-grid" id="invokerGuideGrid">
+      <!-- Injected via JS -->
+    </div>
+  </div>
+
+  <!-- 30s Sprint Results Modal Overlay -->
+  <div class="invoker-results-overlay" id="invokerResultsOverlay" style="display: none;">
+    <div class="results-badge">
+      <img src="/images/invoker/invoker_invoke.png" alt="Sprint Result">
+    </div>
+    <h3 class="results-title">30s Sprint Finished!</h3>
+    <div class="results-rank" id="resRank">Grand Magus</div>
+
+    <div class="results-grid">
+      <div class="res-metric">
+        <span class="res-val" id="resScore">0</span>
+        <span class="res-lbl">Skills Cast</span>
+      </div>
+      <div class="res-metric">
+        <span class="res-val" id="resStreak">0</span>
+        <span class="res-lbl">Best Streak</span>
+      </div>
+      <div class="res-metric">
+        <span class="res-val" id="resSpeed">0.00s</span>
+        <span class="res-lbl">Avg Speed</span>
+      </div>
+      <div class="res-metric">
+        <span class="res-val" id="resAccuracy">100%</span>
+        <span class="res-lbl">Accuracy</span>
+      </div>
+      <div class="res-metric">
+        <span class="res-val" id="resFastest">0.00s</span>
+        <span class="res-lbl">Fastest</span>
+      </div>
+      <div class="res-metric">
+        <span class="res-val" id="resAttempts">0</span>
+        <span class="res-lbl">Attempts</span>
+      </div>
+    </div>
+
+    <div class="results-actions">
+      <button class="btn-play-again" id="btnPlayAgain" type="button">⚡ Play Again (Space)</button>
+      <button class="btn-close-results" id="btnCloseResults" type="button">Casual Practice</button>
+    </div>
+  </div>
+</div>
+
+<script src="{{ base_path }}/assets/js/invoker-game.js"></script>
