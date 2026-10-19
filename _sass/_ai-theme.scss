@@ -212,13 +212,13 @@ h1, h2, h3, h4, h5, h6 {
    4. Sidebar: Profile Picture & Info (Centered, Correctly Aligned & Framed)
    -------------------------------------------------------------------------- */
 .sidebar {
-  background: rgba(255, 255, 255, 0.78) !important;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(226, 232, 240, 0.8) !important;
+  background: rgba(255, 255, 255, 0.86) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
   border-radius: 20px !important;
   padding: 32px 24px !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 10px 25px -5px rgba(0, 0, 0, 0.02) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03), 0 10px 25px -5px rgba(0, 0, 0, 0.03) !important;
   box-sizing: border-box !important;
   margin: 0 !important;
   width: 100% !important;
@@ -516,12 +516,12 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Generous Card Surface Styling */
 .page__inner-wrap {
-  background: rgba(255, 255, 255, 0.78) !important;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(226, 232, 240, 0.8) !important;
+  background: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
   border-radius: 20px !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 10px 25px -5px rgba(0, 0, 0, 0.02) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03), 0 10px 25px -5px rgba(0, 0, 0, 0.03) !important;
   box-sizing: border-box !important;
   padding: 44px 52px !important; /* Generous breathing room so text never touches card edges */
   width: 100% !important;
@@ -811,7 +811,9 @@ h1, h2, h3, h4, h5, h6 {
    8. Footer
    -------------------------------------------------------------------------- */
 .page__footer {
-  background: #ffffff !important;
+  background: rgba(255, 255, 255, 0.94) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-top: 1px solid #e2e8f0 !important;
   color: #64748b !important;
   font-size: 13px;

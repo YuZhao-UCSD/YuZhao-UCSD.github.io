@@ -1,15 +1,16 @@
 /**
  * Minimalist Research Background Canvas
- * Inspired by OpenAI Research & Mathematics Aesthetics
+ * Inspired by Google DeepMind (Fluid Intelligence & Aurora Wave Manifolds) & Mathematics Aesthetics
  *
  * Core Research & Industry Themes Showcased (Pure Geometric Shapes, No Text):
- *  1. 2D Random Field on a Grid with 2 Peaks (RFT): 3D isometric surface mesh where grid curves into 2 Gaussian hill peaks
- *  2. Autonomous Vehicle Safety & Prediction (Cruise AV): Ego AV autonomously yielding to an aggressive car based on predicted trajectory
- *  3. Motorsport Circuit Apex & F1 Telemetry: Red/white rumble kerbs, optimal racing line, speed & brake/throttle telemetry
- *  4. Longitudinal Modeling & Biostatistics (CPRM): Diverging treatment trajectories & confidence envelope
- *  5. Experiment Design & Causal Inference: Randomization pipeline, causal DAG, potential outcomes & ATE
- *  6. Google Search & Information Retrieval: Search lens, semantic ranking vectors & Google 4-color nodes
- *  7. Smooth Floating Dots: Serene linear drift (no Brownian erratic motion, no connecting lines)
+ *  1. Google DeepMind Fluid Intelligence: Multi-layered harmonic wave ribbons & ambient gradient mesh
+ *  2. 2D Random Field on a Grid with 2 Peaks (RFT): 3D isometric surface mesh where grid curves into 2 Gaussian hill peaks
+ *  3. Autonomous Vehicle Safety & Prediction (Cruise AV): Ego AV autonomously yielding to an aggressive car based on predicted trajectory
+ *  4. Motorsport Circuit Apex & F1 Telemetry: Red/white rumble kerbs, optimal racing line, speed & brake/throttle telemetry
+ *  5. Longitudinal Modeling & Biostatistics (CPRM): Diverging treatment trajectories & confidence envelope
+ *  6. Experiment Design & Causal Inference: Randomization pipeline, causal DAG, potential outcomes & ATE
+ *  7. Google Search & Information Retrieval: Search lens, semantic ranking vectors & Google 4-color nodes
+ *  8. Dota 2 Invoker: Three Elemental Orbs & Invoked Skills
  */
 (function() {
   'use strict';
@@ -30,53 +31,136 @@
 
     var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Interactive mouse tracker (gentle proximity deflection without lines)
+    // Interactive mouse tracker (velocity & smooth parallax)
     var mouse = {
       x: null,
       y: null,
-      radius: 120
+      vx: 0,
+      vy: 0,
+      radius: 320
+    };
+    var smoothMouse = {
+      x: null,
+      y: null
     };
 
-    // Google signature color palette for background moving dots
-    var googleDotColors = [
-      'rgba(66, 133, 244, 0.65)', // Google Blue (#4285F4)
-      'rgba(234, 67, 53, 0.65)',  // Google Red (#EA4335)
-      'rgba(251, 188, 5, 0.70)',  // Google Yellow (#FBBC05)
-      'rgba(52, 168, 83, 0.65)'   // Google Green (#34A853)
+    // =========================================================================
+    // DEEPMIND 3D GREY CRYSTAL FALLING SNOW
+    // - Prominent, larger 3D crystals with sculpted facets and drop shadows
+    // - High contrast modern grey & slate palette on white / subtle gradient canvas
+    // - 3D tumble perspective rotation (yaw, pitch, spin) and depth layering
+    // - Swept in the SAME direction when the cursor moves close
+    // - Fast melting: dissolves and shrinks quickly as it descends
+    // =========================================================================
+    var snowflakes = [];
+
+    var LIGHT_GREY_SNOW_PALETTE = [
+      // 1. Soft slate light grey (#94a3b8 / #a0aec0)
+      { r: 172, g: 184, b: 200 },
+      // 2. Cool misty steel grey
+      { r: 182, g: 192, b: 206 },
+      // 3. Clean neutral light grey
+      { r: 190, g: 198, b: 210 },
+      // 4. Soft pearl light grey
+      { r: 200, g: 208, b: 218 }
     ];
 
-    // Elegant neutral slate/grey tones for background dots
-    var greyDotColors = [
-      'rgba(148, 163, 184, 0.60)', // Slate Grey
-      'rgba(100, 116, 139, 0.55)', // Cool Grey
-      'rgba(156, 163, 175, 0.60)'  // Neutral Grey
-    ];
+    function createSnowflake(initialSpawn) {
+      // Continuous 3D depth layer: z = 0.20 (far distance) to z = 1.00 (closest foreground)
+      var z = Math.random() * 0.80 + 0.20;
+      var radius, fallSpeed, maxAlpha;
 
-    // 1. Smooth Floating Dots (Google colors + Grey dots, serene linear drift, NO connecting lines)
-    var dots = [];
+      if (z > 0.70) {
+        // Foreground: Micro light grey snow orbs (diameter ~3.8 - 5.2px)
+        radius = Math.random() * 0.7 + 1.9;
+        fallSpeed = Math.random() * 0.14 + 0.36; // Gentle, slow floating (~0.36 - 0.50 px/frame)
+        maxAlpha = Math.random() * 0.12 + 0.80; // 0.80 - 0.92 crisp visibility
+      } else if (z > 0.42) {
+        // Midground: Fine light grey snow specks (diameter ~2.6 - 3.6px)
+        radius = Math.random() * 0.5 + 1.3;
+        fallSpeed = Math.random() * 0.10 + 0.24; // Slow floating (~0.24 - 0.34 px/frame)
+        maxAlpha = Math.random() * 0.12 + 0.65; // 0.65 - 0.77
+      } else {
+        // Background: Subtle distant snow specks (diameter ~1.6 - 2.4px)
+        radius = Math.random() * 0.4 + 0.8;
+        fallSpeed = Math.random() * 0.08 + 0.14; // Serene background drift (~0.14 - 0.22 px/frame)
+        maxAlpha = Math.random() * 0.10 + 0.48; // 0.48 - 0.58
+      }
 
-    function initDots() {
-      dots = [];
-      var count = Math.max(42, Math.min(76, Math.floor((width * height) / 18000)));
-      for (var i = 0; i < count; i++) {
-        var angle = Math.random() * Math.PI * 2;
-        var spd = Math.random() * 0.28 + 0.14;
-        var color;
-        // Interleave Google colors and neutral grey dots
-        if (i % 2 === 0) {
-          color = googleDotColors[(i / 2) % googleDotColors.length];
+      var color = LIGHT_GREY_SNOW_PALETTE[Math.floor(Math.random() * LIGHT_GREY_SNOW_PALETTE.length)];
+
+      var w = width || window.innerWidth || 1200;
+      var h = height || window.innerHeight || 800;
+      var spawnX, spawnY;
+
+      if (initialSpawn) {
+        // Populate entire canvas uniformly (ensuring bottom-left & all quadrants active immediately)
+        spawnX = Math.random() * (w + 60) - 30;
+        spawnY = Math.random() * (h + 60) - 30;
+      } else {
+        // Continuous replenishment across the canvas:
+        var mode = Math.random();
+        if (mode < 0.40) {
+          // 1. Direct Bottom-Left & Mid-Left Focus (40% of respawns):
+          // Specifically guarantees that bottom-left is consistently populated with snow flurries!
+          spawnX = Math.random() * (w * 0.52);
+          spawnY = Math.random() * (h * 0.55) + (h * 0.38);
+        } else if (mode < 0.75) {
+          // 2. Full-Canvas Ambient Spread (35% of respawns):
+          // Covers center, bottom-right, and general screen
+          spawnX = Math.random() * (w + 40) - 20;
+          spawnY = Math.random() * (h + 40) - 20;
         } else {
-          color = greyDotColors[Math.floor(i / 2) % greyDotColors.length];
+          // 3. Top & Right Outside Boundaries (25% of respawns):
+          // Natural drift entering from top-right towards bottom-left
+          var topWeight = w / (w + h);
+          if (Math.random() < topWeight) {
+            spawnX = Math.random() * (w * 1.20) - w * 0.10;
+            spawnY = -Math.random() * 30 - 10;
+          } else {
+            spawnX = w + Math.random() * 30 + 10;
+            spawnY = Math.random() * (h * 0.90) - 10;
+          }
         }
+      }
 
-        dots.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          vx: Math.cos(angle) * spd,
-          vy: Math.sin(angle) * spd,
-          radius: Math.random() * 1.5 + 1.6,
-          color: color
-        });
+      // Drift from top-right towards bottom-left:
+      var baseDriftX = -fallSpeed * (Math.random() * 0.25 + 0.60);
+
+      // Balanced lifespan for slow graceful drift (~190px - 310px)
+      var maxTravelDistance = Math.random() * 120 + 190;
+
+      return {
+        x: spawnX,
+        y: spawnY,
+        spawnY: spawnY,
+        z: z, // 3D depth layer
+        distTraveled: initialSpawn ? Math.random() * maxTravelDistance * 0.7 : 0,
+        maxTravelDistance: maxTravelDistance,
+        radius: radius,
+        fallSpeed: fallSpeed,
+        baseDriftX: baseDriftX,
+        maxAlpha: maxAlpha,
+        color: color,
+        swayAmp: (Math.random() * 0.20 + 0.10) * z,
+        swaySpeed: Math.random() * 0.0012 + 0.0008,
+        swayPhase: Math.random() * Math.PI * 0.6,
+        breezeVx: 0,
+        breezeVy: 0,
+        // Animated Cursor Melt State:
+        isMelting: false,
+        meltProgress: 0.0,
+        meltSpeed: Math.random() * 0.012 + 0.038
+      };
+    }
+
+    function initSnowflakeSystem() {
+      if (width <= 0 || height <= 0) return;
+      snowflakes = [];
+      // Denser particle field ensuring bottom-left, bottom-right, and entire canvas stay active
+      var count = width < 768 ? 95 : 180;
+      for (var i = 0; i < count; i++) {
+        snowflakes.push(createSnowflake(true));
       }
     }
 
@@ -92,21 +176,18 @@
 
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      if (dots.length === 0) {
-        initDots();
-      } else {
-        for (var i = 0; i < dots.length; i++) {
-          dots[i].x = Math.min(dots[i].x, width);
-          dots[i].y = Math.min(dots[i].y, height);
-        }
-      }
+      initSnowflakeSystem();
     }
 
     window.addEventListener('resize', resize, { passive: true });
     resize();
 
-    // Mouse & Touch tracking with passive window listeners
+    // Mouse & Touch tracking with passive window listeners and velocity measurement
     window.addEventListener('mousemove', function(e) {
+      if (mouse.x !== null && mouse.y !== null) {
+        mouse.vx = (e.clientX - mouse.x);
+        mouse.vy = (e.clientY - mouse.y);
+      }
       mouse.x = e.clientX;
       mouse.y = e.clientY;
     }, { passive: true });
@@ -114,17 +195,25 @@
     window.addEventListener('mouseleave', function() {
       mouse.x = null;
       mouse.y = null;
+      mouse.vx = 0;
+      mouse.vy = 0;
     }, { passive: true });
 
     window.addEventListener('touchstart', function(e) {
       if (e.touches && e.touches.length > 0) {
         mouse.x = e.touches[0].clientX;
         mouse.y = e.touches[0].clientY;
+        mouse.vx = 0;
+        mouse.vy = 0;
       }
     }, { passive: true });
 
     window.addEventListener('touchmove', function(e) {
       if (e.touches && e.touches.length > 0) {
+        if (mouse.x !== null && mouse.y !== null) {
+          mouse.vx = (e.touches[0].clientX - mouse.x);
+          mouse.vy = (e.touches[0].clientY - mouse.y);
+        }
         mouse.x = e.touches[0].clientX;
         mouse.y = e.touches[0].clientY;
       }
@@ -133,6 +222,8 @@
     window.addEventListener('touchend', function() {
       mouse.x = null;
       mouse.y = null;
+      mouse.vx = 0;
+      mouse.vy = 0;
     }, { passive: true });
 
     // Visibility optimization
@@ -260,7 +351,7 @@
        DRAWING MODULES (PURE GEOMETRIC SHAPES, NO TEXT)
        -------------------------------------------------------------------------- */
 
-    // 1. Background Coordinate Cross Matrix (OpenAI Mathematics Style)
+    // 1. Background Coordinate Cross Matrix (OG Canvas Style)
     function drawCoordinateGrid() {
       var step = 64;
       var startX = step / 2;
@@ -2569,43 +2660,193 @@
       ctx.restore();
     }
 
-    // 9. Smooth Floating Dots (Google 4-color pattern + Grey dots, serene linear drift, NO lines, gentle mouse deflection)
-    function drawFloatingDots() {
+    /* --------------------------------------------------------------------------
+       DEEPMIND FALLING SNOW & CELESTIAL CRYSTAL FLURRIES (White / Subtle Gradient)
+       Exact visual recreation of https://deepmind.google/ snow particles:
+       1. Crisp white base with ethereal ambient light sky gradient
+       2. Delicate falling snow flurries (micro 4-pointed Gemini stars, diamonds, specks)
+       3. Serene fluttering downward drift with gradual fade-out
+       -------------------------------------------------------------------------- */
+
+    // 1. Crisp White Canvas with Subtle Ethereal Ambient Sky Gradient
+    function drawWhiteSubtleGradient(time) {
+      if (width <= 0 || height <= 0) return;
+
       ctx.save();
 
-      for (var i = 0; i < dots.length; i++) {
-        var d = dots[i];
+      // Clean white base with very subtle top-to-bottom atmospheric light gradient
+      var bgGrad = ctx.createLinearGradient(0, 0, 0, height);
+      bgGrad.addColorStop(0.00, '#f8fafc'); // Softest winter sky tint
+      bgGrad.addColorStop(0.35, '#fafcff'); // Light serene off-white
+      bgGrad.addColorStop(1.00, '#ffffff'); // Pure clean white
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, width, height);
+
+      var t = prefersReducedMotion ? 0 : time;
+
+      // Ultra-subtle, airy ambient radiance bloom at top-right
+      var glow1X = width * 0.80 + Math.sin(t * 0.0003) * 35;
+      var glow1Y = height * 0.18 + Math.cos(t * 0.00025) * 25;
+      var glow1R = Math.max(width, height) * 0.50;
+      var glow1 = ctx.createRadialGradient(glow1X, glow1Y, 0, glow1X, glow1Y, glow1R);
+      glow1.addColorStop(0.0, 'rgba(219, 234, 254, 0.40)'); // Ethereal frost blue
+      glow1.addColorStop(0.45, 'rgba(238, 242, 255, 0.18)');
+      glow1.addColorStop(1.0, 'rgba(255, 255, 255, 0)');
+      ctx.fillStyle = glow1;
+      ctx.beginPath();
+      ctx.arc(glow1X, glow1Y, glow1R, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Ultra-subtle ambient bloom at upper-left flank
+      var glow2X = width * 0.18 + Math.cos(t * 0.0003) * 30;
+      var glow2Y = height * 0.22 + Math.sin(t * 0.00025) * 25;
+      var glow2R = Math.max(width, height) * 0.45;
+      var glow2 = ctx.createRadialGradient(glow2X, glow2Y, 0, glow2X, glow2Y, glow2R);
+      glow2.addColorStop(0.0, 'rgba(243, 232, 255, 0.35)'); // Soft lavender frost
+      glow2.addColorStop(0.50, 'rgba(238, 242, 255, 0.14)');
+      glow2.addColorStop(1.0, 'rgba(255, 255, 255, 0)');
+      ctx.fillStyle = glow2;
+      ctx.beginPath();
+      ctx.arc(glow2X, glow2Y, glow2R, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Ultra-subtle ambient frost bloom at bottom-left flank
+      var glow3X = width * 0.16 + Math.sin(t * 0.00028 + 1.8) * 25;
+      var glow3Y = height * 0.82 + Math.cos(t * 0.00022 + 1.2) * 25;
+      var glow3R = Math.max(width, height) * 0.42;
+      var glow3 = ctx.createRadialGradient(glow3X, glow3Y, 0, glow3X, glow3Y, glow3R);
+      glow3.addColorStop(0.0, 'rgba(238, 242, 255, 0.28)'); // Soft ethereal frost tint
+      glow3.addColorStop(0.50, 'rgba(241, 245, 249, 0.12)');
+      glow3.addColorStop(1.0, 'rgba(255, 255, 255, 0)');
+      ctx.fillStyle = glow3;
+      ctx.beginPath();
+      ctx.arc(glow3X, glow3Y, glow3R, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    // 2. DeepMind 3D Grey Round Snow Flurries (Top-Right to Bottom-Left, Fast Fade Away)
+    function drawDeepMindSnowFlurries(time) {
+      if (width <= 0 || height <= 0 || snowflakes.length === 0) return;
+      var t = prefersReducedMotion ? 0 : time;
+
+      ctx.save();
+
+      // Decay mouse velocity gradually for organic wind breeze inertia
+      mouse.vx *= 0.92;
+      mouse.vy *= 0.92;
+
+      for (var i = 0; i < snowflakes.length; i++) {
+        var flake = snowflakes[i];
 
         if (!prefersReducedMotion) {
-          // Smooth steady linear float
-          d.x += d.vx;
-          d.y += d.vy;
+          // Unified gentle swaying motion
+          var sway = Math.sin(t * 0.0016 + flake.swayPhase) * flake.swayAmp;
 
-          // Gentle mouse avoidance deflection (no lines drawn)
+          // Interactive Cursor Proximity: triggers fast animated melt & wind draft!
           if (mouse.x !== null && mouse.y !== null) {
-            var mdx = d.x - mouse.x;
-            var mdy = d.y - mouse.y;
-            var mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+            var dx = flake.x - mouse.x;
+            var dy = flake.y - mouse.y;
+            var dist = Math.sqrt(dx * dx + dy * dy);
 
-            if (mdist < mouse.radius && mdist > 1) {
-              var force = (1 - mdist / mouse.radius) * 0.45;
-              d.x += (mdx / mdist) * force;
-              d.y += (mdy / mdist) * force;
+            if (dist < 180 && dist > 1) {
+              var prox = 1 - dist / 180;
+
+              // Fast, responsive melting: takes less time to fade away (~15-20 frames, ~0.25-0.35s)
+              if (!flake.isMelting) {
+                flake.isMelting = true;
+                flake.meltProgress = 0.0;
+                flake.meltSpeed = 0.045 + prox * 0.035;
+              } else {
+                flake.meltProgress += prox * 0.025;
+              }
+
+              // Unified wind draft: sweep nearby snowflakes towards bottom-left
+              var mouseSpeed = Math.sqrt(mouse.vx * mouse.vx + mouse.vy * mouse.vy);
+              var pushDirX, pushDirY;
+
+              if (mouseSpeed > 0.35) {
+                pushDirX = mouse.vx / mouseSpeed;
+                pushDirY = mouse.vy / mouseSpeed;
+              } else {
+                pushDirX = -0.72;
+                pushDirY = 0.69;
+              }
+
+              var breezeForce = prox * 0.75 * flake.z;
+              flake.breezeVx += pushDirX * breezeForce;
+              flake.breezeVy += pushDirY * breezeForce;
             }
           }
 
-          // Soft boundary bounce
-          if (d.x < 15) { d.x = 15; d.vx = Math.abs(d.vx); }
-          else if (d.x > width - 15) { d.x = width - 15; d.vx = -Math.abs(d.vx); }
-          if (d.y < 15) { d.y = 15; d.vy = Math.abs(d.vy); }
-          else if (d.y > height - 15) { d.y = height - 15; d.vy = -Math.abs(d.vy); }
+          // Advance melt animation state
+          if (flake.isMelting) {
+            flake.meltProgress += flake.meltSpeed;
+          }
+
+          // Friction damping on breeze draft
+          flake.breezeVx *= 0.94;
+          flake.breezeVy *= 0.94;
+
+          // Position update: unified drift from top-right to bottom-left!
+          flake.x += flake.baseDriftX + sway + flake.breezeVx;
+          flake.y += flake.fallSpeed + flake.breezeVy;
+
+          // Distance traveled across screen
+          flake.distTraveled += flake.fallSpeed + Math.abs(flake.baseDriftX);
         }
 
-        // Draw clean floating dot (Google colors, NO lines)
-        ctx.fillStyle = d.color;
+        // Snowflake Lifecycle Calculations:
+        // A. Soft entrance fade-in over first 20px
+        var fadeIn = Math.min(1.0, Math.max(0.0, flake.distTraveled / 20));
+
+        // B. Natural travel fade-out over last 55px (shorter distance, takes less time to fade away)
+        var naturalFade = 1.0;
+        var fadeTail = 55;
+        if (flake.distTraveled > flake.maxTravelDistance - fadeTail) {
+          naturalFade = Math.max(0.0, (flake.maxTravelDistance - flake.distTraveled) / fadeTail);
+        }
+
+        // C. Animated Cursor Melt curves: fast fade
+        var m = flake.isMelting ? Math.min(1.0, flake.meltProgress) : 0.0;
+        var meltAlpha = Math.max(0.0, 1.0 - Math.pow(m, 1.25));
+        var meltShrink = Math.max(0.08, 1.0 - Math.pow(m, 1.15) * 0.88);
+
+        // Smooth opacity calculation (no sparkling or flashing)
+        var alpha = flake.maxAlpha * fadeIn * naturalFade * meltAlpha;
+
+        // Current round radius dynamically shrinking during fade away
+        var curR = Math.max(0.4, flake.radius * meltShrink);
+
+        // Respawn condition:
+        var isOffScreen = flake.x < -40 || flake.y > height + 40 || flake.y < -50 || flake.x > width + 80;
+        var isMelted = flake.isMelting && flake.meltProgress >= 1.0;
+        var isExpired = flake.distTraveled >= flake.maxTravelDistance || alpha <= 0.008;
+
+        if (isOffScreen || isMelted || isExpired) {
+          snowflakes[i] = createSnowflake(false);
+          continue;
+        }
+
+        // Draw Clean Matte Round Light Grey Ball (Non-luminous)
+        ctx.save();
+        ctx.translate(flake.x, flake.y);
+
+        var col = flake.color;
+
+        // Clean matte light grey fill (no shiny specular highlights or glows)
+        ctx.fillStyle = 'rgba(' + col.r + ',' + col.g + ',' + col.b + ', ' + alpha + ')';
         ctx.beginPath();
-        ctx.arc(d.x, d.y, d.radius, 0, Math.PI * 2);
+        ctx.arc(0, 0, curR, 0, Math.PI * 2);
         ctx.fill();
+
+        // Delicate soft rim contour for crisp boundary against white background
+        ctx.strokeStyle = 'rgba(148, 163, 184, ' + (alpha * 0.35) + ')';
+        ctx.lineWidth = Math.max(0.35, curR * 0.10);
+        ctx.stroke();
+
+        ctx.restore();
       }
 
       ctx.restore();
@@ -2635,39 +2876,39 @@
       var elapsed = timestamp - lastTimestamp;
       lastTimestamp = timestamp;
 
-      // Clear canvas to pristine pure white
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(0, 0, width, height);
+      // 1. Clean White Base with Subtle Ambient Sky Gradient
+      drawWhiteSubtleGradient(timestamp);
+
+      // 2. Base Mathematical Coordinate Matrix Grid (OG Canvas Style)
+      drawCoordinateGrid();
+
+      // 3. DeepMind Falling Snow & Celestial Crystal Flurries (Unified Direction, Fast Melting)
+      drawDeepMindSnowFlurries(timestamp);
 
       // Organic placements: asymmetrical layout with ~25% tucking under frosted panel edges
       var placements = getMotifPlacements(timestamp);
 
-      // 1. Base Mathematical Coordinate Matrix Grid
-      drawCoordinateGrid();
 
-      // 2. 2D Random Field on a Grid with 2 Peaks (RFT) - Partially tucks under sidebar
+      // 5. 2D Random Field on a Grid with 2 Peaks (RFT) - Partially tucks under sidebar
       drawRFT2DGridMotif(timestamp, placements.rft);
 
-      // 3. AV Autonomously Yielding to Aggressive Cut-in Car - Fast reaction, no trailing box
+      // 6. AV Autonomously Yielding to Aggressive Cut-in Car - Fast reaction, no trailing box
       drawAVYieldingMotif(timestamp, placements.av);
 
-      // 4. Motorsport Circuit Apex & F1 Telemetry - Red/white rumble kerbs, optimal racing line, speed & brake/throttle telemetry
+      // 7. Motorsport Circuit Apex & F1 Telemetry - Red/white rumble kerbs, optimal racing line, speed & brake/throttle telemetry
       drawMotorsportTelemetryMotif(timestamp, placements.f1);
 
-      // 5. Longitudinal Linear Random Effects Spaghetti Plot - 2 colors (Treatment vs Control)
+      // 8. Longitudinal Linear Random Effects Spaghetti Plot - 2 colors (Treatment vs Control)
       drawLongitudinalSpaghettiMotif(timestamp, placements.long);
 
-      // 6. Experiment Design & Causal Inference - Randomization Pipeline, Causal DAG, Potential Outcomes, ATE
+      // 9. Experiment Design & Causal Inference - Randomization Pipeline, Causal DAG, Potential Outcomes, ATE
       drawCausalInferenceMotif(timestamp, placements.causal);
 
-      // 7. Google Web Search & Ranking Graph - Web search capsule, crawl graph, SERP
+      // 10. Google Web Search & Ranking Graph - Web search capsule, crawl graph, SERP
       drawGoogleSearchMotif(timestamp, placements.search);
 
-      // 8. Dota 2 Invoker - Three Elemental Orbs & Invoked Skills (Mid-Left Flank)
+      // 11. Dota 2 Invoker - Three Elemental Orbs & Invoked Skills (Mid-Left Flank)
       drawInvokerMotif(timestamp, placements.invoker);
-
-      // 9. Smooth Floating Dots - Google colors + Grey dots (pure minimal aesthetics)
-      drawFloatingDots();
 
       if (!prefersReducedMotion) {
         animationId = requestAnimationFrame(animate);
