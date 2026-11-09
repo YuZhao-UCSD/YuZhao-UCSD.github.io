@@ -19,6 +19,7 @@ Here are some of my personal interests outside work.
 - Watching soccer games. My favorite team is AC Milan [<img src="/images/milan.png" width="28" height="28" style="vertical-align: -6px; display: inline-block; margin-left: 4px;">](https://www.acmilan.com/en). *Forza Milan!*
 - Scuderia Ferrari Formula 1 [<img src="/images/sf.png" width="28" height="28" style="vertical-align: -6px; display: inline-block; margin-left: 4px;">](https://www.ferrari.com/en-EN/formula1). 
 - [Sci-fi](https://www.imdb.com/search/title/?genres=sci-fi&explore=title_type,genres&title_type=tvSeries) and [thriller](https://www.imdb.com/search/title/?genres=thriller&title_type=tv_series,mini_series) TV shows.
+- Studying history: [Pacific War interactive map](https://pacificwar.yuz867.workers.dev).
 
 ### Video Games
 Games I have been playing recently:
